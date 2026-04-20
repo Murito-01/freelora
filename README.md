@@ -18,11 +18,12 @@ This project is built as part of a personal portfolio to demonstrate fullstack d
 
 ## 🎯 Core Features (Planned)
 
-* Client Management
-* Project Management
-* Task Tracking
-* Invoice Generation (PDF)
-* Dashboard & Analytics
+- ✅ Authentication (Login & Register)  
+- 🔄 Client Management (basic CRUD)  
+- ⏳ Project Management  
+- ⏳ Task Tracking  
+- ⏳ Invoice Generation (PDF)  
+- ⏳ Dashboard & Analytics  
 
 ---
 
@@ -61,12 +62,12 @@ php artisan serve
 
 ## 📈 Development Progress
 
-* ✅ Project initialized with Laravel
-* ✅ Environment & database configured (SQLite)
-* ✅ Authentication system implemented (Login & Register)
-* 🔄 Currently building: Client Management
-* ⏳ Next: Project & Task Management
-* ⏳ Planned: Invoice system & dashboard analytics
+- ✅ Project initialized with Laravel  
+- ✅ Environment & database configured (SQLite)  
+- ✅ Authentication system implemented (Laravel Breeze)  
+- ✅ Client Management (basic create & list)  
+- 🔄 Improving UI & user experience  
+- ⏳ Next: Project & Task Management  
 
 ---
 
