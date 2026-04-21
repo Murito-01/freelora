@@ -19,7 +19,7 @@ This project is built as part of a personal portfolio to demonstrate fullstack d
 ## 🎯 Core Features (Planned)
 
 - ✅ Authentication (Login & Register)  
-- 🔄 Client Management (basic CRUD)  
+- ✅ Client Management (basic CRUD)  
 - ⏳ Project Management  
 - ⏳ Task Tracking  
 - ⏳ Invoice Generation (PDF)  
@@ -67,7 +67,7 @@ php artisan serve
 - ✅ Authentication system implemented (Laravel Breeze)  
 - ✅ Client Management (basic create & list)  
 - 🔄 Improving UI & user experience  
-- ⏳ Next: Project & Task Management  
+- ⏳ Next: Authorization & security improvements   
 
 ---
 
