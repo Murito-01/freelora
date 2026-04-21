@@ -12,9 +12,11 @@ class ClientController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+
         $clients = auth()->user()->clients()->get();
 
         return view('clients.index', compact('clients'));
+        
     }
 
     /**
@@ -29,6 +31,7 @@ class ClientController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email',
@@ -54,24 +57,38 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
-    {
-        //
+    public function edit(Client $client) {
+
+        return view('clients.edit', compact('client'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
-    {
-        //
+    public function update(Request $request, Client $client) {
+
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            'company' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $client->update($data);
+
+        return redirect()->route('clients.index')->with('success', 'Client updated');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
-    {
-        //
+    public function destroy(Client $client) {
+
+        $client->delete();
+    
+        return redirect()->back()->with('success', 'Client deleted');
+
     }
 }

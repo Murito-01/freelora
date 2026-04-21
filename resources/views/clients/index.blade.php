@@ -62,11 +62,30 @@
                 @else
                     <ul class="space-y-2">
                         @foreach($clients as $client)
-                            <li class="border p-3 rounded">
-                                <strong>{{ $client->name }}</strong><br>
-                                <span class="text-sm text-gray-600">
-                                    {{ $client->email ?? 'No email' }}
-                                </span>
+                            <li class="border p-3 rounded flex justify-between items-center">
+                                <div>
+                                    <strong>{{ $client->name }}</strong><br>
+                                    <span class="text-sm text-gray-600">
+                                        {{ $client->email ?? 'No email' }}
+                                    </span>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    <a href="{{ route('clients.edit', $client) }}"
+                                        class="bg-yellow-500 text-white px-3 py-1 rounded">
+                                        Edit
+                                    </a>
+
+                                    <form action="{{ route('clients.destroy', $client) }}" method="POST"
+                                            onsubmit="return confirm('Delete this client?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="bg-red-600 text-white px-3 py-1 rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </li>
                         @endforeach
                     </ul>
