@@ -55,6 +55,17 @@
 
             <!-- Client List -->
             <div class="bg-white shadow rounded p-6">
+                <form method="GET" action="{{ route('clients.index') }}" class="mb-4 flex gap-2">
+                    <input type="text" name="search"
+                        value="{{ request('search') }}"
+                        placeholder="Search client..."
+                        class="w-full border rounded px-3 py-2">
+
+                    <button class="bg-gray-800 text-white px-4 py-2 rounded">
+                        Search
+                    </button>
+                </form>
+
                 <h3 class="text-lg font-semibold mb-4">Client List</h3>
 
                 @if($clients->isEmpty())
@@ -89,6 +100,9 @@
                             </li>
                         @endforeach
                     </ul>
+                    <div class="mt-4">
+                        {{ $clients->links() }}
+                    </div>
                 @endif
             </div>
 

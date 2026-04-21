@@ -14,12 +14,20 @@ class ClientController extends Controller {
 
     use AuthorizesRequests;
 
-    public function index() {
-
-        $clients = auth()->user()->clients()->get();
-
+    public function index(Request $request) {
+        $query = auth()->user()->clients();
+    
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%')
+                  ->orWhere('company', 'like', '%' . $request->search . '%');
+            });
+        }
+    
+        $clients = $query->latest()->paginate(5)->withQueryString();
+    
         return view('clients.index', compact('clients'));
-        
     }
 
     /**
@@ -60,42 +68,38 @@ class ClientController extends Controller {
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client) {
-
+    public function edit($id) {
+        $client = auth()->user()->clients()->findOrFail($id);
+    
         return view('clients.edit', compact('client'));
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client) {
-
-        $this->authorize('update', $client);
-
+    public function update(Request $request, $id) {
+        $client = auth()->user()->clients()->findOrFail($id);
+    
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email',
             'company' => 'nullable|string',
             'notes' => 'nullable|string',
         ]);
-
+    
         $client->update($data);
-
+    
         return redirect()->route('clients.index')->with('success', 'Client updated');
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client) {
-
-        $this->authorize('delete', $client);
-
+    public function destroy($id) {
+        $client = auth()->user()->clients()->findOrFail($id);
+    
         $client->delete();
     
         return redirect()->back()->with('success', 'Client deleted');
-
     }
 }
