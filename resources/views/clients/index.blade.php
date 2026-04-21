@@ -18,20 +18,33 @@
             <div class="bg-white shadow rounded p-6 mb-6">
                 <h3 class="text-lg font-semibold mb-4">Add Client</h3>
 
+                @if ($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                        <ul class="list-disc pl-5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form method="POST" action="{{ route('clients.store') }}" class="space-y-4">
                     @csrf
 
-                    <input type="text" name="name" placeholder="Name"
+                    <input type="text" name="name"
+                        value="{{ old('name') }}"
                         class="w-full border rounded px-3 py-2" required>
 
-                    <input type="email" name="email" placeholder="Email"
+                    <input type="email" name="email"
+                        value="{{ old('email') }}"
                         class="w-full border rounded px-3 py-2">
 
-                    <input type="text" name="company" placeholder="Company"
+                    <input type="text" name="company"
+                        value="{{ old('company') }}"
                         class="w-full border rounded px-3 py-2">
 
-                    <textarea name="notes" placeholder="Notes"
-                        class="w-full border rounded px-3 py-2"></textarea>
+                    <textarea name="notes"
+                        class="w-full border rounded px-3 py-2">{{ old('notes') }}</textarea>
 
                     <button type="submit"
                         class="bg-blue-600 text-white px-4 py-2 rounded">
