@@ -6,56 +6,43 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            @if(session('success'))
-                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <!-- Add Client Form -->
-            <div class="bg-white shadow rounded p-6 mb-6">
-                <h3 class="text-lg font-semibold mb-4">Add Client</h3>
-
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
-                        <ul class="list-disc pl-5">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
+            <div class="bg-white shadow rounded p-6">
                 <form method="POST" action="{{ route('clients.store') }}" class="space-y-4">
                     @csrf
 
-                    <input type="text" name="name"
-                        value="{{ old('name') }}"
+                    <input type="text" name="name" placeholder="Client Name"
                         class="w-full border rounded px-3 py-2" required>
 
-                    <input type="email" name="email"
-                        value="{{ old('email') }}"
+                    <input type="email" name="email" placeholder="Email"
                         class="w-full border rounded px-3 py-2">
 
-                    <input type="text" name="company"
-                        value="{{ old('company') }}"
+                    <input type="text" name="company" placeholder="Company"
                         class="w-full border rounded px-3 py-2">
 
-                    <textarea name="notes"
-                        class="w-full border rounded px-3 py-2">{{ old('notes') }}</textarea>
+                    <textarea name="notes" placeholder="Notes"
+                        class="w-full border rounded px-3 py-2"></textarea>
 
-                    <button type="submit"
-                        class="bg-blue-600 text-white px-4 py-2 rounded">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded">
                         Add Client
                     </button>
                 </form>
+
+                <!-- Error Messages -->
+                @if ($errors->any())
+                    <ul class="mt-4 list-disc pl-5 text-red-600">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
 
-            <!-- Client List -->
+            <!-- Search -->
             <div class="bg-white shadow rounded p-6">
-                <form method="GET" action="{{ route('clients.index') }}" class="mb-4 flex gap-2">
+                <form method="GET" action="{{ route('clients.index') }}" class="flex gap-2">
                     <input type="text" name="search"
                         value="{{ request('search') }}"
                         placeholder="Search client..."
@@ -65,45 +52,82 @@
                         Search
                     </button>
                 </form>
+            </div>
 
-                <h3 class="text-lg font-semibold mb-4">Client List</h3>
+            <!-- Client Table -->
+            <div class="bg-white shadow rounded p-6">
 
                 @if($clients->isEmpty())
-                    <p class="text-gray-500">No clients yet.</p>
+                    <p class="text-gray-500">No clients found.</p>
                 @else
-                    <ul class="space-y-2">
-                        @foreach($clients as $client)
-                            <li class="border p-3 rounded flex justify-between items-center">
-                                <div>
-                                    <strong>{{ $client->name }}</strong><br>
-                                    <span class="text-sm text-gray-600">
-                                        {{ $client->email ?? 'No email' }}
-                                    </span>
-                                </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-gray-200">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Name</th>
+                                    <th class="px-4 py-2 text-left">Email</th>
+                                    <th class="px-4 py-2 text-left">Company</th>
+                                    <th class="px-4 py-2 text-left">Created</th>
+                                    <th class="px-4 py-2 text-right">Actions</th>
+                                </tr>
+                            </thead>
 
-                                <div class="flex gap-2">
-                                    <a href="{{ route('clients.edit', $client) }}"
-                                        class="bg-yellow-500 text-white px-3 py-1 rounded">
-                                        Edit
-                                    </a>
+                            <tbody>
+                                @foreach($clients as $client)
+                                    <tr class="border-t hover:bg-gray-50">
 
-                                    <form action="{{ route('clients.destroy', $client) }}" method="POST"
-                                            onsubmit="return confirm('Delete this client?')">
-                                        @csrf
-                                        @method('DELETE')
+                                        <td class="px-4 py-2 font-medium">
+                                            {{ $client->name }}
+                                        </td>
 
-                                        <button class="bg-red-600 text-white px-3 py-1 rounded">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                                        <td class="px-4 py-2 text-sm text-gray-600">
+                                            {{ $client->email ?? '-' }}
+                                        </td>
+
+                                        <td class="px-4 py-2 text-sm text-gray-600">
+                                            {{ $client->company ?? '-' }}
+                                        </td>
+
+                                        <td class="px-4 py-2 text-sm text-gray-500">
+                                            {{ $client->created_at->diffForHumans() }}
+                                        </td>
+
+                                        <td class="px-4 py-2 text-right">
+                                            <div class="flex justify-end gap-2">
+
+                                                <!-- Edit -->
+                                                <a href="{{ route('clients.edit', $client->id) }}"
+                                                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
+                                                    Edit
+                                                </a>
+
+                                                <!-- Delete -->
+                                                <form method="POST"
+                                                      action="{{ route('clients.destroy', $client->id) }}"
+                                                      onsubmit="return confirm('Delete this client?')">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                                                        Delete
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
                     <div class="mt-4">
                         {{ $clients->links() }}
                     </div>
                 @endif
+
             </div>
 
         </div>
