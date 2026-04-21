@@ -1,38 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Clients</title>
-</head>
-<body>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Clients
+        </h2>
+    </x-slot>
 
-    <h1>My Clients</h1>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-    @if(session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    <h2>Add Client</h2>
+            <!-- Add Client Form -->
+            <div class="bg-white shadow rounded p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Add Client</h3>
 
-    <form method="POST" action="{{ route('clients.store') }}">
-        @csrf
+                <form method="POST" action="{{ route('clients.store') }}" class="space-y-4">
+                    @csrf
 
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email">
-        <input type="text" name="company" placeholder="Company">
-        <textarea name="notes" placeholder="Notes"></textarea>
+                    <input type="text" name="name" placeholder="Name"
+                        class="w-full border rounded px-3 py-2" required>
 
-        <button type="submit">Add Client</button>
-    </form>
+                    <input type="email" name="email" placeholder="Email"
+                        class="w-full border rounded px-3 py-2">
 
-    <h2>Client List</h2>
+                    <input type="text" name="company" placeholder="Company"
+                        class="w-full border rounded px-3 py-2">
 
-    <ul>
-        @foreach($clients as $client)
-            <li>
-                {{ $client->name }} - {{ $client->email ?? 'No email' }}
-            </li>
-        @endforeach
-    </ul>
+                    <textarea name="notes" placeholder="Notes"
+                        class="w-full border rounded px-3 py-2"></textarea>
 
-</body>
-</html>
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded">
+                        Add Client
+                    </button>
+                </form>
+            </div>
+
+            <!-- Client List -->
+            <div class="bg-white shadow rounded p-6">
+                <h3 class="text-lg font-semibold mb-4">Client List</h3>
+
+                @if($clients->isEmpty())
+                    <p class="text-gray-500">No clients yet.</p>
+                @else
+                    <ul class="space-y-2">
+                        @foreach($clients as $client)
+                            <li class="border p-3 rounded">
+                                <strong>{{ $client->name }}</strong><br>
+                                <span class="text-sm text-gray-600">
+                                    {{ $client->email ?? 'No email' }}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+        </div>
+    </div>
+</x-app-layout>
