@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class ClientController extends Controller
-{
+class ClientController extends Controller {
     /**
      * Display a listing of the resource.
      */
+
+    use AuthorizesRequests;
+
     public function index() {
 
         $clients = auth()->user()->clients()->get();
@@ -68,6 +71,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client) {
 
+        $this->authorize('update', $client);
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email',
@@ -85,6 +90,8 @@ class ClientController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Client $client) {
+
+        $this->authorize('delete', $client);
 
         $client->delete();
     
