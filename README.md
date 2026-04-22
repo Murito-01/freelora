@@ -18,22 +18,23 @@ This project is built as part of a personal portfolio to demonstrate fullstack d
 
 ## 🎯 Core Features (Planned)
 
-- ✅ Authentication (Login & Register)  
-- ✅ Client Management (basic CRUD)  
-- ⏳ Project Management  
-- ⏳ Task Tracking  
-- ⏳ Invoice Generation (PDF)  
-- ⏳ Dashboard & Analytics  
+- ✅ Authentication (Login & Register)
+- ✅ Client Management (CRUD)
+- ✅ Project Management (per client)
+- ⏳ Task Management (in progress)
+- ⏳ Invoice Generation (planned)
+- ⏳ Dashboard & Analytics (planned)
 
 ---
 
 ## 🛠️ Tech Stack
 
-* PHP 8.3
-* Laravel 13
-* Blade (UI)
-* Vite (Frontend Build Tool)
-* SQLite (Local Development)
+- PHP 8.3
+- Laravel 13
+- Blade (UI Rendering)
+- Vite (Frontend Build Tool)
+- Tailwind CSS
+- SQLite (Development Database)
 
 ---
 
@@ -62,12 +63,12 @@ php artisan serve
 
 ## 📈 Development Progress
 
-- ✅ Project initialized with Laravel  
-- ✅ Environment & database configured (SQLite)  
-- ✅ Authentication system implemented (Laravel Breeze)  
-- ✅ Client Management (basic create & list)  
-- 🔄 Improving UI & user experience  
-- ⏳ Next: Authorization & security improvements   
+- ✅ Laravel project setup
+- ✅ Authentication system (Laravel Breeze)
+- ✅ Client CRUD system  
+- ✅ Project system (per client)
+- 🔄 UI & UX improvements  
+- ⏳ Task system (in development)
 
 ---
 
