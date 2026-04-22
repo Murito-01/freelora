@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,5 +34,20 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 Route::post('/clients/{client}/projects', [ClientController::class, 'storeProject'])
     ->name('clients.projects.store');
+
+Route::get('/projects/{project}', [ProjectController::class, 'show'])
+    ->name('projects.show');
+
+Route::patch('/projects/{project}/status', [ProjectController::class, 'updateStatus'])
+    ->name('projects.updateStatus');
+
+Route::post('/projects/{project}/tasks', [ProjectController::class, 'storeTask'])
+    ->name('projects.tasks.store');
+
+Route::patch('/tasks/{task}/toggle', [ProjectController::class, 'toggleTask'])
+    ->name('tasks.toggle');
+
+Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])
+    ->name('projects.store');
 
 require __DIR__.'/auth.php';

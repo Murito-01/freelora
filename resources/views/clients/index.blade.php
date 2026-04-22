@@ -61,8 +61,9 @@
                     <p class="text-gray-500">No clients found.</p>
                 @else
                     <div class="overflow-x-auto">
-                        <table class="min-w-full border border-gray-200">
-                            <thead class="bg-gray-200">
+                        <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                            <!-- HEADER -->
+                            <thead class="bg-gray-100 text-left text-sm uppercase text-gray-600">
                                 <tr>
                                     <th class="px-4 py-2 text-left">Name</th>
                                     <th class="px-4 py-2 text-left">Email</th>
@@ -72,81 +73,68 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <!-- BODY -->
+                            <tbody class="divide-y">
                                 @foreach($clients as $client)
-                                    <tr class="border-t hover:bg-gray-50">
+                <tr class="hover:bg-gray-50 align-top">
 
-                                        <td class="px-4 py-2 font-medium">
-                                            {{ $client->name }}
-                                        </td>
+                    <!-- CLIENT -->
+                    <td class="px-4 py-4 font-semibold">
+                        {{ $client->name }}
+                    </td>
 
-                                        <td class="px-4 py-2">
-                                            <strong>{{ $client->name }}</strong>
+                    <!-- EMAIL -->
+                    <td class="px-4 py-4 text-sm text-gray-600">
+                        {{ $client->email }}
+                    </td>
 
-                                            <!-- Project List -->
-                                            <div class="mt-2 space-y-1">
-                                                @foreach($client->projects as $project)
-                                                    <div class="text-sm bg-gray-100 px-2 py-1 rounded">
-                                                        {{ $project->name }}
-                                                    </div>
-                                                @endforeach
-                                            </div>
+                    <!-- COMPANY -->
+                    <td class="px-4 py-4 text-sm text-gray-600">
+                        {{ $client->company }}
+                    </td>
 
-                                            <!-- Add Project Form -->
-                                            <form method="POST"
-                                                    action="{{ route('clients.projects.store', $client->id) }}"
-                                                    class="mt-2 flex gap-2">
-                                                @csrf
+                    <!-- PROJECTS -->
+                    <td class="px-4 py-4">
+                        <div class="space-y-1 mb-2">
+                            @foreach($client->projects as $project)
+                                <div class="bg-gray-100 px-2 py-1 rounded text-sm">
+                                    {{ $project->name }}
+                                </div>
+                            @endforeach
+                        </div>
 
-                                                <input type="text" name="name"
-                                                    placeholder="New project..."
-                                                    class="border px-2 py-1 rounded text-sm w-full">
+                        <!-- ADD PROJECT -->
+                        <form method="POST" action="{{ route('projects.store', $client->id) }}" class="flex gap-2">
+                            @csrf
+                            <input type="text" name="name"
+                                placeholder="New project..."
+                                class="border px-2 py-1 rounded text-sm w-full">
+                            <button class="bg-blue-500 text-white px-2 py-1 rounded text-sm">
+                                +
+                            </button>
+                        </form>
+                    </td>
 
-                                                <button class="bg-blue-500 text-white px-2 py-1 rounded text-sm">
-                                                    +
-                                                </button>
-                                            </form>
-                                        </td>
+                    <!-- ACTION -->
+                    <td class="px-4 py-4 text-right space-x-2">
+                        <a href="{{ route('clients.edit', $client->id) }}"
+                           class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
+                           Edit
+                        </a>
 
-                                        <td class="px-4 py-2 text-sm text-gray-600">
-                                            {{ $client->email ?? '-' }}
-                                        </td>
+                        <form action="{{ route('clients.destroy', $client->id) }}"
+                              method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
 
-                                        <td class="px-4 py-2 text-sm text-gray-600">
-                                            {{ $client->company ?? '-' }}
-                                        </td>
-
-                                        <td class="px-4 py-2 text-sm text-gray-500">
-                                            {{ $client->created_at->diffForHumans() }}
-                                        </td>
-
-                                        <td class="px-4 py-2 text-right">
-                                            <div class="flex justify-end gap-2">
-
-                                                <!-- Edit -->
-                                                <a href="{{ route('clients.edit', $client->id) }}"
-                                                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
-                                                    Edit
-                                                </a>
-
-                                                <!-- Delete -->
-                                                <form method="POST"
-                                                      action="{{ route('clients.destroy', $client->id) }}"
-                                                      onsubmit="return confirm('Delete this client?')">
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                    <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
-                                                        Delete
-                                                    </button>
-                                                </form>
-
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                </tr>
+            @endforeach
+        </tbody>
                         </table>
                     </div>
 
