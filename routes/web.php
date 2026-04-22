@@ -31,4 +31,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
 
+Route::post('/clients/{client}/projects', [ClientController::class, 'storeProject'])
+    ->name('clients.projects.store');
+
 require __DIR__.'/auth.php';

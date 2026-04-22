@@ -80,6 +80,34 @@
                                             {{ $client->name }}
                                         </td>
 
+                                        <td class="px-4 py-2">
+                                            <strong>{{ $client->name }}</strong>
+
+                                            <!-- Project List -->
+                                            <div class="mt-2 space-y-1">
+                                                @foreach($client->projects as $project)
+                                                    <div class="text-sm bg-gray-100 px-2 py-1 rounded">
+                                                        {{ $project->name }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <!-- Add Project Form -->
+                                            <form method="POST"
+                                                    action="{{ route('clients.projects.store', $client->id) }}"
+                                                    class="mt-2 flex gap-2">
+                                                @csrf
+
+                                                <input type="text" name="name"
+                                                    placeholder="New project..."
+                                                    class="border px-2 py-1 rounded text-sm w-full">
+
+                                                <button class="bg-blue-500 text-white px-2 py-1 rounded text-sm">
+                                                    +
+                                                </button>
+                                            </form>
+                                        </td>
+
                                         <td class="px-4 py-2 text-sm text-gray-600">
                                             {{ $client->email ?? '-' }}
                                         </td>

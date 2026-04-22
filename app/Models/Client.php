@@ -18,4 +18,10 @@ class Client extends Model {
         'company',
         'notes',
     ];
+
+    public function projects() {
+
+        return $this->hasMany(Project::class);
+
+    }
 }

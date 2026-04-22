@@ -15,17 +15,15 @@ class ClientController extends Controller {
     use AuthorizesRequests;
 
     public function index(Request $request) {
-        $query = auth()->user()->clients();
+        $query = Client::where('user_id', auth()->id());
     
         if ($request->search) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('email', 'like', '%' . $request->search . '%')
-                  ->orWhere('company', 'like', '%' . $request->search . '%');
-            });
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
     
-        $clients = $query->latest()->paginate(5)->withQueryString();
+        $clients = $query->with('projects') // 🔥 penting
+                         ->latest()
+                         ->paginate(5);
     
         return view('clients.index', compact('clients'));
     }
@@ -101,5 +99,21 @@ class ClientController extends Controller {
         $client->delete();
     
         return redirect()->back()->with('success', 'Client deleted');
+    }
+
+    public function storeProject(Request $request, Client $client) {
+        $this->authorize('update', $client);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $client->projects()->create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return back();
     }
 }
