@@ -50,4 +50,10 @@ Route::patch('/tasks/{task}/toggle', [ProjectController::class, 'toggleTask'])
 Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])
     ->name('projects.store');
 
+Route::get('/projects/{project}', [ProjectController::class, 'show'])
+    ->name('projects.show');
+
+Route::put('/tasks/{task}', [ProjectController::class, 'updateTask'])
+    ->name('tasks.update');
+
 require __DIR__.'/auth.php';

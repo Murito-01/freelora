@@ -12,8 +12,17 @@ class ProjectController extends Controller {
 
     public function show(Project $project) {
         $this->authorize('view', $project);
-
-        return view('projects.show', compact('project'));
+    
+        $status = request('status');
+    
+        $tasks = $project->tasks()
+            ->when($status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->latest()
+            ->get();
+    
+        return view('projects.show', compact('project', 'tasks'));
     }
 
     public function updateStatus(Project $project) {
@@ -41,6 +50,14 @@ class ProjectController extends Controller {
     public function toggleTask(Task $task) {
         $task->update([
             'is_completed' => !$task->is_completed
+        ]);
+
+        return back();
+    }
+
+    public function updateTask(Request $request, Task $task) {
+        $task->update([
+            'status' => $request->status
         ]);
 
         return back();

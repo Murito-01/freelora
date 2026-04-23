@@ -98,7 +98,10 @@
                         <div class="space-y-1 mb-2">
                             @foreach($client->projects as $project)
                                 <div class="bg-gray-100 px-2 py-1 rounded text-sm">
-                                    {{ $project->name }}
+                                    <a href="{{ route('projects.show', $project->id) }}"
+                                        class="text-blue-600 hover:underline">
+                                        {{ $project->name }}
+                                    </a>
                                 </div>
                             @endforeach
                         </div>

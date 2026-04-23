@@ -1,74 +1,130 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold">
-            Project Detail
+    <div class="max-w-3xl mx-auto py-8">
+
+        <!-- TITLE -->
+        <h2 class="text-2xl font-bold mb-2">
+            {{ $project->name }}
         </h2>
-    </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+        <p class="text-gray-600 mb-6">
+            Project Tasks
+        </p>
 
-            <h3 class="text-lg font-bold mb-2">
-                {{ $project->name }}
-            </h3>
+        <!-- FILTER -->
+        @php $current = request('status'); @endphp
 
-            <p class="text-gray-600 mb-4">
-                {{ $project->description ?? 'No description' }}
-            </p>
+        <div class="flex gap-2 mb-6">
+            <a href="?"
+               class="px-3 py-1 rounded {{ !$current ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                All
+            </a>
 
-            <p class="mb-4">
-                Status:
-                <span class="px-2 py-1 rounded text-white
-                    {{ $project->status === 'active' ? 'bg-green-500' : 'bg-gray-500' }}">
-                    {{ ucfirst($project->status) }}
-                </span>
-            </p>
+            <a href="?status=todo"
+               class="px-3 py-1 rounded {{ $current=='todo' ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                Todo
+            </a>
 
-            <hr class="my-6">
+            <a href="?status=in_progress"
+               class="px-3 py-1 rounded {{ $current=='in_progress' ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                In Progress
+            </a>
 
-            <h4 class="font-semibold mb-2">Tasks</h4>
+            <a href="?status=done"
+               class="px-3 py-1 rounded {{ $current=='done' ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                Done
+            </a>
+        </div>
 
-            <!-- Add Task -->
-            <form method="POST" action="{{ route('projects.tasks.store', $project->id) }}" class="flex gap-2 mb-4">
-                @csrf
-                <input type="text" name="title"
-                    placeholder="New task..."
-                    class="border px-3 py-2 rounded w-full">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
-            </form>
+        <!-- ADD TASK -->
+        <form method="POST"
+              action="{{ route('projects.tasks.store', $project->id) }}"
+              class="flex gap-2 mb-6">
+            @csrf
+            <input type="text"
+                   name="title"
+                   placeholder="New task..."
+                   class="border px-3 py-2 rounded w-full">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                Add
+            </button>
+        </form>
 
-            <!-- Task List -->
-            <div class="space-y-2">
-                @foreach($project->tasks as $task)
-                    <div class="flex justify-between items-center border px-3 py-2 rounded">
+        <!-- TASK LIST -->
+        <div class="space-y-3">
 
-                        <span class="{{ $task->is_completed ? 'line-through text-gray-500' : '' }}">
+            @forelse($tasks as $task)
+                <div class="flex justify-between items-center border p-3 rounded">
+
+                    <!-- LEFT SIDE -->
+                    <div class="flex items-center gap-2">
+
+                        <!-- TITLE -->
+                        <span class="{{ $task->is_completed ? 'line-through text-gray-400' : '' }}">
                             {{ $task->title }}
                         </span>
 
-                        <form method="POST" action="{{ route('tasks.toggle', $task->id) }}">
+                        <!-- STATUS BADGE -->
+                        <span class="px-2 py-1 text-xs rounded
+                            @if($task->status == 'todo') bg-gray-300
+                            @elseif($task->status == 'in_progress') bg-yellow-400
+                            @elseif($task->status == 'done') bg-green-500 text-white
+                            @endif
+                        ">
+                            {{ $task->status }}
+                        </span>
+
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+                    <div class="flex items-center gap-2">
+
+                        <!-- DROPDOWN STATUS -->
+                        <form method="POST" action="{{ route('tasks.update', $task->id) }}">
+                            @csrf
+                            @method('PUT')
+
+                            <select name="status"
+                                    onchange="this.form.submit()"
+                                    class="border rounded text-sm px-2 py-1">
+
+                                <option value="todo" {{ $task->status=='todo' ? 'selected' : '' }}>
+                                    Todo
+                                </option>
+
+                                <option value="in_progress" {{ $task->status=='in_progress' ? 'selected' : '' }}>
+                                    In Progress
+                                </option>
+
+                                <option value="done" {{ $task->status=='done' ? 'selected' : '' }}>
+                                    Done
+                                </option>
+
+                            </select>
+                        </form>
+
+                        <!-- DONE BUTTON -->
+                        <form method="POST"
+                              action="{{ route('tasks.toggle', $task->id) }}">
                             @csrf
                             @method('PATCH')
 
-                            <button class="text-sm px-2 py-1 rounded
-                                {{ $task->is_completed ? 'bg-gray-400 text-white' : 'bg-green-500 text-white' }}">
+                            <button class="px-3 py-1 rounded text-sm
+                                {{ $task->is_completed
+                                    ? 'bg-gray-400 text-white'
+                                    : 'bg-green-500 text-white' }}">
                                 {{ $task->is_completed ? 'Undo' : 'Done' }}
                             </button>
                         </form>
 
                     </div>
-                @endforeach
-            </div>
 
-            <form method="POST" action="{{ route('projects.updateStatus', $project->id) }}">
-                @csrf
-                @method('PATCH')
+                </div>
 
-                <button class="bg-blue-600 text-white px-4 py-2 rounded">
-                    Toggle Status
-                </button>
-            </form>
+            @empty
+                <p class="text-gray-500">No tasks found.</p>
+            @endforelse
 
         </div>
+
     </div>
 </x-app-layout>
