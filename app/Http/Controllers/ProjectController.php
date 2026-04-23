@@ -38,12 +38,15 @@ class ProjectController extends Controller {
     public function storeTask(Request $request, Project $project) {
         $request->validate([
             'title' => 'required|string|max:255',
+            'deadline' => 'nullable|date'
         ]);
-
+    
         $project->tasks()->create([
             'title' => $request->title,
+            'deadline' => $request->deadline,
+            'status' => 'todo',
         ]);
-
+    
         return back();
     }
 

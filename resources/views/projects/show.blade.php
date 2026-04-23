@@ -37,13 +37,19 @@
 
         <!-- ADD TASK -->
         <form method="POST"
-              action="{{ route('projects.tasks.store', $project->id) }}"
-              class="flex gap-2 mb-6">
+                action="{{ route('projects.tasks.store', $project->id) }}"
+                class="flex gap-2 mb-6">
             @csrf
+
             <input type="text"
-                   name="title"
-                   placeholder="New task..."
-                   class="border px-3 py-2 rounded w-full">
+                name="title"
+                placeholder="New task..."
+                class="border px-3 py-2 rounded w-full">
+
+            <input type="date"
+                name="deadline"
+                class="border px-3 py-2 rounded">
+
             <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                 Add
             </button>
@@ -53,7 +59,11 @@
         <div class="space-y-3">
 
             @forelse($tasks as $task)
-                <div class="flex justify-between items-center border p-3 rounded">
+            <div class="flex justify-between items-center border p-3 rounded
+                @if($task->deadline && $task->deadline->isPast() && $task->status !== 'done')
+                    bg-red-100 border-red-300
+                @endif
+            ">
 
                     <!-- LEFT SIDE -->
                     <div class="flex items-center gap-2">
@@ -62,6 +72,12 @@
                         <span class="{{ $task->is_completed ? 'line-through text-gray-400' : '' }}">
                             {{ $task->title }}
                         </span>
+
+                        @if($task->deadline)
+                            <div class="text-xs text-gray-500">
+                                Due: {{ $task->deadline->format('d M Y') }}
+                            </div>
+                        @endif
 
                         <!-- STATUS BADGE -->
                         <span class="px-2 py-1 text-xs rounded

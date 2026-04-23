@@ -9,6 +9,11 @@ class Task extends Model {
         'title',
         'status',
         'project_id',
+        'deadline',
+    ];
+
+    protected $casts = [
+        'deadline' => 'date',
     ];
     
     public function project() {
