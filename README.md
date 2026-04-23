@@ -65,7 +65,8 @@ php artisan serve
 
 - ✅ Client Management (CRUD)
 - ✅ Project Management (per client)
-- ✅ Task Management (basic + filtering)
+- ✅ Task Management (CRUD + filtering + status)
+- ✅ Deadline & Overdue Highlight
 - 🔄 UI & UX improvements
 
 ---
