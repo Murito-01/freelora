@@ -1,34 +1,62 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <div class="max-w-5xl mx-auto py-8">
+
+        <h2 class="text-2xl font-bold mb-6">
             Dashboard
         </h2>
-    </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <!-- STATS GRID -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                <!-- Total Clients -->
-                <div class="bg-white shadow rounded p-6">
-                    <h3 class="text-gray-500 text-sm">Total Clients</h3>
-                    <p class="text-3xl font-bold">{{ $totalClients }}</p>
-                </div>
-
-                <!-- Placeholder -->
-                <div class="bg-white shadow rounded p-6">
-                    <h3 class="text-gray-500 text-sm">Projects</h3>
-                    <p class="text-3xl font-bold">0</p>
-                </div>
-
-                <div class="bg-white shadow rounded p-6">
-                    <h3 class="text-gray-500 text-sm">Tasks</h3>
-                    <p class="text-3xl font-bold">0</p>
-                </div>
-
+            <div class="bg-white shadow p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Clients</p>
+                <p class="text-xl font-bold">{{ $clients }}</p>
             </div>
 
+            <div class="bg-white shadow p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Projects</p>
+                <p class="text-xl font-bold">{{ $projects }}</p>
+            </div>
+
+            <div class="bg-white shadow p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Tasks</p>
+                <p class="text-xl font-bold">{{ $totalTasks }}</p>
+            </div>
+
+            <div class="bg-white shadow p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Completed</p>
+                <p class="text-xl font-bold text-green-600">
+                    {{ $completedTasks }}
+                </p>
+            </div>
+
+            <div class="bg-white shadow p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Overdue</p>
+                <p class="text-xl font-bold text-red-600">
+                    {{ $overdueTasks }}
+                </p>
+            </div>
+
+        </div>
+
+        <!-- PROGRESS BAR -->
+        @php
+            $progress = $totalTasks > 0
+                ? round(($completedTasks / $totalTasks) * 100)
+                : 0;
+        @endphp
+
+        <div class="bg-white shadow p-4 rounded">
+            <p class="text-sm text-gray-500 mb-2">Task Progress</p>
+
+            <div class="w-full bg-gray-200 rounded h-3">
+                <div class="bg-blue-500 h-3 rounded"
+                    style="width: {{ $progress }}%"></div>
+            </div>
+
+            <p class="text-sm mt-2">
+                {{ $progress }}% completed
+            </p>
         </div>
     </div>
 </x-app-layout>

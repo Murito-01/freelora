@@ -50,11 +50,11 @@ class ProjectController extends Controller {
         return back();
     }
 
-    public function toggleTask(Task $task) {
+    public function toggle(Task $task) {
         $task->update([
-            'is_completed' => !$task->is_completed
+            'status' => $task->status === 'done' ? 'todo' : 'done'
         ]);
-
+    
         return back();
     }
 

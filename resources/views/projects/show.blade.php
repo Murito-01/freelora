@@ -117,30 +117,11 @@
 
                             </select>
                         </form>
-
-                        <!-- DONE BUTTON -->
-                        <form method="POST"
-                              action="{{ route('tasks.toggle', $task->id) }}">
-                            @csrf
-                            @method('PATCH')
-
-                            <button class="px-3 py-1 rounded text-sm
-                                {{ $task->is_completed
-                                    ? 'bg-gray-400 text-white'
-                                    : 'bg-green-500 text-white' }}">
-                                {{ $task->is_completed ? 'Undo' : 'Done' }}
-                            </button>
-                        </form>
-
                     </div>
-
                 </div>
-
             @empty
                 <p class="text-gray-500">No tasks found.</p>
             @endforelse
-
         </div>
-
     </div>
 </x-app-layout>

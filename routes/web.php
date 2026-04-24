@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,5 +56,8 @@ Route::get('/projects/{project}', [ProjectController::class, 'show'])
 
 Route::put('/tasks/{task}', [ProjectController::class, 'updateTask'])
     ->name('tasks.update');
+
+Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])
+    ->name('tasks.updateStatus');
 
 require __DIR__.'/auth.php';
