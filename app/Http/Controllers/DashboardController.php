@@ -58,6 +58,12 @@ class DashboardController extends Controller {
         $inProgressCount = (clone $taskQuery)->where('status', 'in_progress')->count();
         $doneCount = (clone $taskQuery)->where('status', 'done')->count();
 
+        // Activity timeline (ambil 8 aktivitas terakhir)
+        $activities = (clone $taskQuery)
+            ->latest('updated_at')
+            ->take(8)
+            ->get();
+
         return view('dashboard', compact(
             'clients',
             'projects',
@@ -69,7 +75,8 @@ class DashboardController extends Controller {
             'overdueList',
             'todoCount',
             'inProgressCount',
-            'doneCount'
+            'doneCount',
+            'activities'
         ));
     }
 }

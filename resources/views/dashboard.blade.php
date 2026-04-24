@@ -59,6 +59,12 @@
             </p>
         </div>
 
+        <div class="bg-white shadow p-6 rounded mt-8">
+            <h3 class="text-lg font-semibold mb-4">Task Distribution</h3>
+
+            <canvas id="taskChart" height="100"></canvas>
+        </div>
+
         <div class="grid grid-cols-3 gap-4 mt-6">
 
             <div class="bg-gray-100 p-4 rounded text-center">
@@ -131,6 +137,76 @@
                     <p class="text-gray-500 text-sm">No overdue tasks 🎉</p>
                 @endforelse
             </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('taskChart');
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Todo', 'In Progress', 'Done'],
+                datasets: [{
+                    data: [
+                        {{ $todoCount }},
+                        {{ $inProgressCount }},
+                        {{ $doneCount }}
+                    ],
+                    backgroundColor: [
+                        '#9CA3AF',   // gray
+                        '#FACC15',   // yellow
+                        '#22C55E'    // green
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+
+    <div class="mt-10">
+        <h3 class="text-lg font-semibold mb-4">Activity</h3>
+
+        <div class="space-y-3">
+            @forelse($activities as $task)
+                <div class="flex items-start gap-3 border-l-4 pl-3
+                    @if($task->status === 'done') border-green-500
+                    @elseif($task->status === 'in_progress') border-yellow-500
+                    @else border-gray-400
+                    @endif
+                ">
+
+                    <div>
+                        <p class="text-sm">
+                            <span class="font-medium">{{ $task->title }}</span>
+
+                            @if($task->status === 'done')
+                                was completed
+                            @elseif($task->status === 'in_progress')
+                                is in progress
+                            @else
+                                was created
+                            @endif
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            {{ $task->project->name }} •
+                            {{ $task->updated_at->diffForHumans() }}
+                        </p>
+                    </div>
+
+                </div>
+            @empty
+                <p class="text-gray-500 text-sm">No activity yet</p>
+            @endforelse
         </div>
     </div>
 </x-app-layout>
