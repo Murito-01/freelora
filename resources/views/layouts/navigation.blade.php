@@ -16,6 +16,19 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+                <!-- SEARCH BAR (TAMBAHKAN DI SINI) -->
+                <div class="relative hidden sm:flex items-center ml-6">
+                    <input type="text"
+                        id="live-search"
+                        placeholder="Search..."
+                        class="border px-3 py-1 rounded text-sm w-64">
+
+                    <!-- RESULT DROPDOWN -->
+                    <div id="search-results"
+                        class="absolute top-10 left-0 w-full bg-white shadow rounded hidden z-50">
+                    </div>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -100,3 +113,33 @@
         </div>
     </div>
 </nav>
+
+<script>
+    const input = document.getElementById('live-search');
+    const resultsBox = document.getElementById('search-results');
+
+    input.addEventListener('input', async function () {
+        const query = this.value;
+
+        if (query.length < 2) {
+            resultsBox.classList.add('hidden');
+            return;
+        }
+
+        const res = await fetch(`/search-live?q=${query}`);
+        const data = await res.json();
+
+        if (data.length === 0) {
+            resultsBox.innerHTML = `<p class="p-2 text-sm text-gray-500">No results</p>`;
+        } else {
+            resultsBox.innerHTML = data.map(task => `
+                <a href="/projects/${task.project_id}"
+                    class="block px-3 py-2 text-sm hover:bg-gray-100">
+                    ${task.title}
+                </a>
+            `).join('');
+        }   
+
+        resultsBox.classList.remove('hidden');
+    });
+</script>

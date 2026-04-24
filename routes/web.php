@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,5 +60,11 @@ Route::put('/tasks/{task}', [ProjectController::class, 'updateTask'])
 
 Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])
     ->name('tasks.updateStatus');
+
+Route::get('/search', [SearchController::class, 'index'])
+    ->name('search');
+
+Route::get('/search-live', [SearchController::class, 'live'])
+    ->name('search.live');
 
 require __DIR__.'/auth.php';
