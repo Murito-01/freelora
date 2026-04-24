@@ -26,7 +26,7 @@
 
                     <!-- RESULT DROPDOWN -->
                     <div id="search-results"
-                        class="absolute top-10 left-0 w-full bg-white shadow rounded hidden z-50">
+                        class="absolute top-12 left-0 w-full bg-white border border-gray-200 shadow-lg rounded-xl overflow-hidden hidden z-50">
                     </div>
                 </div>
             </div>

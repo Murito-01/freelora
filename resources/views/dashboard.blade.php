@@ -1,37 +1,37 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto py-8">
 
-        <h2 class="text-2xl font-bold mb-6">
+        <h2 class="text-2xl font-semibold tracking-tight mb-6">
             Dashboard
         </h2>
 
         <!-- STATS GRID -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mb-8">
 
-            <div class="bg-white shadow p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Clients</p>
+            <div class="bg-white border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition text-center">
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Clients</p>
                 <p class="text-xl font-bold">{{ $clients }}</p>
             </div>
 
-            <div class="bg-white shadow p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Projects</p>
+            <div class="bg-white border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition text-center">
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Projects</p>
                 <p class="text-xl font-bold">{{ $projects }}</p>
             </div>
 
-            <div class="bg-white shadow p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Tasks</p>
+            <div class="bg-white border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition text-center">
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Tasks</p>
                 <p class="text-xl font-bold">{{ $totalTasks }}</p>
             </div>
 
-            <div class="bg-white shadow p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Completed</p>
+            <div class="bg-white border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition text-center">
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Completed</p>
                 <p class="text-xl font-bold text-green-600">
                     {{ $completedTasks }}
                 </p>
             </div>
 
-            <div class="bg-white shadow p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Overdue</p>
+            <div class="bg-white border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition text-center">
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Overdue</p>
                 <p class="text-xl font-bold text-red-600">
                     {{ $overdueTasks }}
                 </p>
@@ -46,12 +46,14 @@
                 : 0;
         @endphp
 
-        <div class="bg-white shadow p-4 rounded">
-            <p class="text-sm text-gray-500 mb-2">Task Progress</p>
+        <div class="bg-white border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition">
+            <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Task Progress</p>
 
-            <div class="w-full bg-gray-200 rounded h-3">
-                <div class="bg-blue-500 h-3 rounded"
-                    style="width: {{ $progress }}%"></div>
+            <div class="w-full bg-gray-200 rounded h-4">
+                <div class="bg-gradient-to-r from-green-400 to-green-600 h-4 rounded 
+                    transition-all duration-700 ease-in-out"
+                    style="width: {{ $progress }}%">
+                </div>
             </div>
 
             <p class="text-sm mt-2">
@@ -68,17 +70,17 @@
         <div class="grid grid-cols-3 gap-4 mt-6">
 
             <div class="bg-gray-100 p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Todo</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Todo</p>
                 <p class="text-xl font-bold">{{ $todoCount }}</p>
             </div>
 
             <div class="bg-yellow-100 p-4 rounded text-center">
-                <p class="text-sm text-gray-500">In Progress</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wide">In Progress</p>
                 <p class="text-xl font-bold">{{ $inProgressCount }}</p>
             </div>
 
             <div class="bg-green-100 p-4 rounded text-center">
-                <p class="text-sm text-gray-500">Done</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Done</p>
                 <p class="text-xl font-bold">{{ $doneCount }}</p>
             </div>
 

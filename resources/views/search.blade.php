@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto py-8">
 
-        <h2 class="text-2xl font-bold mb-6">
+        <h2 class="text-2xl font-semibold tracking-tight mb-6">
             Search Results for "{{ $q }}"
         </h2>
 
