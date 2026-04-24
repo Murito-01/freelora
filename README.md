@@ -21,7 +21,7 @@ This project is built as part of a personal portfolio to demonstrate fullstack d
 - ✅ Authentication (Login & Register)
 - ✅ Client Management (CRUD)
 - ✅ Project Management (per client)
-- ⏳ Task Management (in progress)
+- ✅ Task Management (in progress)
 - ⏳ Invoice Generation (planned)
 - ⏳ Dashboard & Analytics (planned)
 
@@ -65,8 +65,9 @@ php artisan serve
 
 - ✅ Client Management (CRUD)
 - ✅ Project Management (per client)
-- ✅ Task Management (CRUD + filtering + status)
-- ✅ Deadline & Overdue Highlight
+- ✅ Task Management (status + filtering)
+- ✅ Deadline & Overdue System
+- ✅ Advanced Dashboard (analytics + activity)
 - 🔄 UI & UX improvements
 
 ---
