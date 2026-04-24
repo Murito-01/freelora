@@ -38,13 +38,38 @@ class DashboardController extends Controller {
             ? round(($completedTasks / $totalTasks) * 100)
             : 0;
 
+        // Recent tasks (5 terakhir)
+        $recentTasks = (clone $taskQuery)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // Overdue tasks (limit 5)
+        $overdueList = (clone $taskQuery)
+            ->whereNotNull('deadline')
+            ->where('deadline', '<', now())
+            ->where('status', '!=', 'done')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // Status breakdown
+        $todoCount = (clone $taskQuery)->where('status', 'todo')->count();
+        $inProgressCount = (clone $taskQuery)->where('status', 'in_progress')->count();
+        $doneCount = (clone $taskQuery)->where('status', 'done')->count();
+
         return view('dashboard', compact(
             'clients',
             'projects',
             'totalTasks',
             'completedTasks',
             'overdueTasks',
-            'progress'
+            'progress',
+            'recentTasks',
+            'overdueList',
+            'todoCount',
+            'inProgressCount',
+            'doneCount'
         ));
     }
 }

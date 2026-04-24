@@ -58,5 +58,79 @@
                 {{ $progress }}% completed
             </p>
         </div>
+
+        <div class="grid grid-cols-3 gap-4 mt-6">
+
+            <div class="bg-gray-100 p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Todo</p>
+                <p class="text-xl font-bold">{{ $todoCount }}</p>
+            </div>
+
+            <div class="bg-yellow-100 p-4 rounded text-center">
+                <p class="text-sm text-gray-500">In Progress</p>
+                <p class="text-xl font-bold">{{ $inProgressCount }}</p>
+            </div>
+
+            <div class="bg-green-100 p-4 rounded text-center">
+                <p class="text-sm text-gray-500">Done</p>
+                <p class="text-xl font-bold">{{ $doneCount }}</p>
+            </div>
+
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-semibold mb-3">Recent Tasks</h3>
+
+            <div class="space-y-2">
+                @forelse($recentTasks as $task)
+                    <div class="flex justify-between items-center border p-3 rounded">
+
+                        <div>
+                            <p class="font-medium">{{ $task->title }}</p>
+                            <p class="text-xs text-gray-500">
+                                {{ $task->project->name }}
+                        </p>
+                    </div>
+
+                    <span class="text-xs px-2 py-1 rounded
+                        @if($task->status == 'done') bg-green-200
+                        @elseif($task->status == 'in_progress') bg-yellow-200
+                        @else bg-gray-200
+                        @endif
+                    ">
+                        {{ $task->status }}
+                    </span>
+
+                </div>
+            @empty
+                <p class="text-gray-500 text-sm">No tasks yet</p>
+            @endforelse
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-semibold mb-3 text-red-500">
+                ⚠️ Overdue Tasks
+            </h3>
+
+            <div class="space-y-2">
+                @forelse($overdueList as $task)
+                    <div class="border p-3 rounded bg-red-50">
+
+                        <p class="font-medium">{{ $task->title }}</p>
+
+                        <p class="text-xs text-gray-500">
+                            {{ $task->project->name }}
+                        </p>
+
+                        <p class="text-xs text-red-500">
+                            Due: {{ $task->deadline->format('d M Y') }}
+                        </p>
+
+                    </div>
+                @empty
+                    <p class="text-gray-500 text-sm">No overdue tasks 🎉</p>
+                @endforelse
+            </div>
+        </div>
     </div>
 </x-app-layout>
