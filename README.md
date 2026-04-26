@@ -16,14 +16,22 @@ This project is built as part of a personal portfolio to demonstrate fullstack d
 
 ---
 
-## 🎯 Core Features (Planned)
+## ✨ Features
 
-- ✅ Authentication (Login & Register)
-- ✅ Client Management (CRUD)
-- ✅ Project Management (per client)
-- ✅ Task Management (in progress)
-- ⏳ Invoice Generation (planned)
-- ⏳ Dashboard & Analytics (planned)
+### ✅ Current
+
+- Authentication (Laravel Breeze)
+- Client Management (CRUD)
+- Project Management (per client)
+- Task Tracking (status, deadline, filtering)
+- Dashboard Analytics (tasks, overdue, progress)
+- Invoice System
+
+### ⏳ Coming Soon
+
+- Payment integration
+- Role-based access
+- Real-time updates
 
 ---
 
@@ -61,14 +69,10 @@ php artisan serve
 
 ---
 
-## 📈 Development Progress
+## 🖼️ Preview
 
-- ✅ Client Management (CRUD)
-- ✅ Project Management (per client)
-- ✅ Task Management (status + filtering)
-- ✅ Deadline & Overdue System
-- ✅ Advanced Dashboard (analytics + activity)
-- 🔄 UI & UX improvements
+- Dashboard (Coming soon)
+- Project & Task Management With Invoice System (Coming soon)
 
 ---
 
