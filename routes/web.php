@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\InvoiceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,5 +67,11 @@ Route::get('/search', [SearchController::class, 'index'])
 
 Route::get('/search-live', [SearchController::class, 'live'])
     ->name('search.live');
+
+Route::post('/projects/{project}/invoices', [InvoiceController::class, 'store'])
+    ->name('invoices.store');
+
+Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])
+    ->name('invoices.download');
 
 require __DIR__.'/auth.php';

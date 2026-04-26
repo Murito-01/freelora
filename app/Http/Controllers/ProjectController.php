@@ -35,6 +35,19 @@ class ProjectController extends Controller {
         return back();
     }
 
+    public function store(Request $request, $clientId) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        \App\Models\Project::create([
+            'name' => $request->name,
+            'client_id' => $clientId,
+        ]);
+
+        return back();
+    }
+
     public function storeTask(Request $request, Project $project) {
         $request->validate([
             'title' => 'required|string|max:255',
