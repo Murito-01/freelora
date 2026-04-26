@@ -71,6 +71,9 @@ Route::get('/search-live', [SearchController::class, 'live'])
 Route::post('/projects/{project}/invoices', [InvoiceController::class, 'store'])
     ->name('invoices.store');
 
+Route::patch('/invoices/{invoice}/status', [InvoiceController::class, 'updateStatus'])
+    ->name('invoices.updateStatus');
+
 Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])
     ->name('invoices.download');
 

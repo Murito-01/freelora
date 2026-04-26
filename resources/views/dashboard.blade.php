@@ -37,6 +37,16 @@
                 </p>
             </div>
 
+            <div class="bg-white border border-gray-200 p-5 rounded-xl">
+                <div class="text-xs text-gray-500 uppercase">Paid Invoices</div>
+                <div class="text-xl font-semibold">{{ $paidInvoices }}</div>
+            </div>
+
+            <div class="bg-white border border-gray-200 p-5 rounded-xl">
+                <div class="text-xs text-gray-500 uppercase">Unpaid Invoices</div>
+                <div class="text-xl font-semibold">{{ $unpaidInvoices }}</div>
+            </div>
+
         </div>
 
         <!-- PROGRESS BAR -->

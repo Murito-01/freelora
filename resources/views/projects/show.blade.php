@@ -152,7 +152,17 @@
                     <span>{{ $invoice->number }}</span>
 
                     <div class="flex gap-2 items-center">
-                        <span>${{ $invoice->amount }}</span>
+                        <span>Rp{{ number_format($invoice->amount, 0, ',', '.') }}</span>
+
+                        <form method="POST" action="{{ route('invoices.updateStatus', $invoice->id) }}">
+                            @csrf
+                            @method('PATCH')
+                            <select name="status" onchange="this.form.submit()"
+                                class="border rounded text-sm px-2 py-1 {{ $invoice->status == 'paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                <option value="unpaid" {{ $invoice->status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
+                                <option value="paid" {{ $invoice->status == 'paid' ? 'selected' : '' }}>Paid</option>
+                            </select>
+                        </form>
 
                         <a href="{{ route('invoices.download', $invoice->id) }}"
                             class="text-sm bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">

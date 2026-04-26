@@ -31,4 +31,18 @@ class InvoiceController extends Controller {
 
         return $pdf->download($invoice->number . '.pdf');
     }
+
+    public function updateStatus(Request $request, Invoice $invoice) {
+        $this->authorize('update', $invoice->project);
+
+        $request->validate([
+            'status' => 'required|in:unpaid,paid'
+        ]);
+
+        $invoice->update([
+            'status' => $request->status
+        ]);
+
+        return back();
+    }
 }

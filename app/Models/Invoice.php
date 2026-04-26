@@ -11,6 +11,7 @@ class Invoice extends Model {
         'number',
         'amount',
         'due_date',
+        'status',
     ];
     
     public function project() {

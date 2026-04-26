@@ -64,6 +64,13 @@ class DashboardController extends Controller {
             ->take(8)
             ->get();
 
+        $invoiceQuery = \App\Models\Invoice::whereHas('project.client', function ($q) use ($user) {
+            $q->where('user_id', $user->id);
+        });
+
+        $paidInvoices = (clone $invoiceQuery)->where('status', 'paid')->count();
+        $unpaidInvoices = (clone $invoiceQuery)->where('status', 'unpaid')->count();
+
         return view('dashboard', compact(
             'clients',
             'projects',
@@ -76,7 +83,9 @@ class DashboardController extends Controller {
             'todoCount',
             'inProgressCount',
             'doneCount',
-            'activities'
+            'activities',
+            'paidInvoices',
+            'unpaidInvoices'
         ));
     }
 }
