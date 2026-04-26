@@ -7,6 +7,8 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceMail;
 
 class InvoiceController extends Controller {
     use AuthorizesRequests;
@@ -44,5 +46,17 @@ class InvoiceController extends Controller {
         ]);
 
         return back();
+    }
+
+    public function send(Invoice $invoice) {
+        $client = $invoice->project->client;
+
+        if (!$client->email) {
+            return back()->with('error', 'Client has no email.');
+        }
+
+        Mail::to($client->email)->send(new InvoiceMail($invoice));
+
+        return back()->with('success', 'Invoice sent!');
     }
 }

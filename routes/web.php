@@ -77,4 +77,7 @@ Route::patch('/invoices/{invoice}/status', [InvoiceController::class, 'updateSta
 Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])
     ->name('invoices.download');
 
+Route::post('/invoices/{invoice}/send', [InvoiceController::class, 'send'])
+    ->name('invoices.send');
+
 require __DIR__.'/auth.php';

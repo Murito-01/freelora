@@ -93,7 +93,7 @@
                     <!-- RIGHT SIDE -->
                     <div class="flex items-center gap-2">
 
-                        <!-- DROPDOWN STATUS -->
+                        <!-- STATUS -->
                         <form method="POST" action="{{ route('tasks.update', $task->id) }}">
                             @csrf
                             @method('PUT')
@@ -163,6 +163,14 @@
                                 <option value="paid" {{ $invoice->status == 'paid' ? 'selected' : '' }}>Paid</option>
                             </select>
                         </form>
+
+                        <form method="POST" action="{{ route('invoices.send', $invoice->id) }}">
+                            @csrf
+
+                            <button class="text-sm bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
+                                Send
+                            </button>
+    </form>
 
                         <a href="{{ route('invoices.download', $invoice->id) }}"
                             class="text-sm bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">
