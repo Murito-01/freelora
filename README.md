@@ -71,8 +71,14 @@ php artisan serve
 
 ## 🖼️ Preview
 
-- Dashboard (Coming soon)
-- Project & Task Management With Invoice System (Coming soon)
+### Dashboard
+![Dashboard](public/preview/3A.png)
+
+### Project & Task Management With Invoice System
+![Project & Task Management With Invoice System](public/preview/3B.png)
+
+### Clients management
+![Clients management](public/preview/3C.png)
 
 ---
 
